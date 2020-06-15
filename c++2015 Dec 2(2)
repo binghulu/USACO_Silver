@@ -1,0 +1,45 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+int main(){
+    ifstream fin("highcard.in");
+    ofstream fout("highcard.out");
+
+    int N;
+    cin >> N; fin >> N;
+    vector<char> cards(2*N);
+    for (int i = 0; i < 2*N; i++){
+        cards[i] = 'B';
+    }
+
+    int temp;
+    for (int i = 0; i < N; i++){
+        cin >> temp; fin >> temp;
+        cards[temp-1] = 'E';
+    }
+
+    int wins = 0;
+    int B = 0, E = 0;
+    for (int i = 0; i < 2*N; i++){
+        if (cards[i] == 'E') E++;
+        else {
+            B++;
+            if (E >= B){
+                wins += B;
+                E -= B;
+                B = 0;
+            }
+            else{
+                wins += E;
+                B = 0, E = 0;
+            }
+        }
+
+    }
+    cout << wins << endl;
+    fout << wins << endl;
+
+
+}
